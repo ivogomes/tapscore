@@ -2,7 +2,7 @@
 import PackageDescription
 
 // Pure scoring engine for TapScore — no watchOS/UIKit deps, so it builds & tests on macOS via `swift test`.
-// The watchOS app depends on this local package; the tests mirror ../../tapscore/scoring.test.cjs.
+// The watchOS app depends on this local package; the tests mirror ../../scoring.test.cjs.
 let package = Package(
     name: "TapScoreEngine",
     products: [

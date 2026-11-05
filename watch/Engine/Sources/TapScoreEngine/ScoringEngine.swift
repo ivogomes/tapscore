@@ -1,6 +1,6 @@
 import Foundation
 
-/// TapScore scoring engine — a faithful Swift port of `tools/tapscore/scoring.js`.
+/// TapScore scoring engine — a faithful Swift port of `scoring.js`.
 ///
 /// Single source of truth for the rules (points → games → sets → match) across every sport:
 /// tennis/padel (deuce, advantage, golden point, tie-break, match-tie-break decider) and the

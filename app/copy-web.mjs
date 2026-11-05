@@ -2,7 +2,7 @@
  * copy-web.mjs — assemble the Capacitor webDir (./www) from the TapScore PWA.
  *
  * The native app bundles its assets locally, so we:
- *   1. copy the PWA files from ../tapscore into ./www
+ *   1. copy the PWA files from the repo root (..) into ./www
  *   2. drop things the native shell doesn't need (service worker, iOS web splash images)
  *   3. remove the Google Fonts <link>s so the app makes ZERO network calls
  *      (the CSS already falls back to system-ui; drop a self-hosted font in
@@ -15,11 +15,13 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const SRC = join(here, '..', 'tapscore');
+const SRC = join(here, '..'); // the web app is the repo root
 const OUT = join(here, 'www');
 const FONTS = join(here, 'fonts'); // optional self-hosted font (outfit.css + .woff2)
 
-// Files/dirs we never copy into the native bundle.
+// Files/dirs we never copy into the native bundle: the native apps beside the web app, repo files,
+// and web-only bits.
+const SKIP_TOP = new Set(['app', 'watch', 'wear', '.git', '.github', '.gitignore', 'README.md']);
 const SKIP = new Set(['sw.js', '.DS_Store', '.claude', 'scoring.test.cjs']);
 const SKIP_PREFIX = ['splash-']; // iOS apple-touch-startup-image PNGs — native uses its own splash
 
@@ -33,6 +35,7 @@ await cp(SRC, OUT, {
   filter: (src) => {
     const name = src.slice(SRC.length + 1);
     if (!name) return true;
+    if (SKIP_TOP.has(name.split('/')[0])) return false;
     const base = name.split('/').pop();
     if (SKIP.has(base)) return false;
     if (SKIP_PREFIX.some((p) => base.startsWith(p))) return false;

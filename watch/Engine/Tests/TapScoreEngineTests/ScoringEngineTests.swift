@@ -1,7 +1,7 @@
 import XCTest
 @testable import TapScoreEngine
 
-/// Mirrors tools/tapscore/scoring.test.cjs — the shared behaviour spec. Keep the two in lockstep.
+/// Mirrors scoring.test.cjs — the shared behaviour spec. Keep the two in lockstep.
 final class ScoringEngineTests: XCTestCase {
 
     // helpers

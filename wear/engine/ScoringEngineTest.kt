@@ -6,7 +6,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
- * Behaviour spec for the Kotlin scoring engine — mirrors `tools/tapscore/scoring.test.cjs`.
+ * Behaviour spec for the Kotlin scoring engine — mirrors `scoring.test.cjs`.
  * If these pass, the Kotlin port matches the web engine (and the Swift port). Keep all three in sync:
  * change scoring.js first, keep scoring.test.cjs green, then mirror here and in the Swift tests.
  */

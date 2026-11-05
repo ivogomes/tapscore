@@ -4,11 +4,11 @@ Standalone-first watchOS scorer: two tap zones (top = you, bottom = opponent), D
 undo, long-press = menu. It reuses the shared scoring rules via a Swift port of the web engine.
 
 ```
-tools/tapscore-watch/
+watch/
 ├── Engine/                      Swift Package — pure scoring engine (no watchOS deps)
 │   ├── Package.swift
-│   ├── Sources/TapScoreEngine/ScoringEngine.swift   ← faithful port of ../tapscore/scoring.js
-│   └── Tests/TapScoreEngineTests/ScoringEngineTests.swift  ← mirrors ../tapscore/scoring.test.cjs
+│   ├── Sources/TapScoreEngine/ScoringEngine.swift   ← faithful port of ../scoring.js
+│   └── Tests/TapScoreEngineTests/ScoringEngineTests.swift  ← mirrors ../scoring.test.cjs
 ├── TapScore Watch/              Xcode project for the watch app (the assembled result of the steps below)
 ├── AppIcon-1024.png             Watch app icon source
 └── WatchApp/                    SwiftUI sources to add to the watch target
@@ -22,7 +22,7 @@ tools/tapscore-watch/
 ## 1. Verify the engine (no Xcode needed)
 
 ```bash
-cd tools/tapscore-watch/Engine
+cd watch/Engine
 swift test
 ```
 The 15 tests mirror the web spec — if they pass, the Swift port matches `scoring.js`. **Rule:** change
@@ -39,7 +39,7 @@ standalone on the wrist** *and* adds the **"Control phone"** remote mode.
 gotchas (the empty companion dropdown, linking the engine package, the blank app icon). Follow that.
 
 The gist of what REMOTE.md has you do:
-1. Open `tools/tapscore-app/ios/App/App.xcworkspace` (the **workspace**, not the project).
+1. Open `app/ios/App/App.xcworkspace` (the **workspace**, not the project).
 2. **File ▸ New ▸ Target ▸ watchOS ▸ App** → "Watch App for Existing iOS App" → pick **App**.
 3. Delete the two generated starter files; drag in our `WatchApp/*.swift` (tick the watch target).
 4. Add the local **TapScoreEngine** package **and confirm it's linked** to the watch target.

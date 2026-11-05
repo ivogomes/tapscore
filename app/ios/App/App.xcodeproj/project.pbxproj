@@ -219,7 +219,7 @@
 			);
 			mainGroup = 504EC2FB1FED79650016851F;
 			packageReferences = (
-				92D02F983013D25D007F69DB /* XCLocalSwiftPackageReference "../../../tapscore-watch/Engine" */,
+				92D02F983013D25D007F69DB /* XCLocalSwiftPackageReference "../../../watch/Engine" */,
 			);
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
 			projectDirPath = "";
@@ -627,16 +627,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		92D02F983013D25D007F69DB /* XCLocalSwiftPackageReference "../../../tapscore-watch/Engine" */ = {
+		92D02F983013D25D007F69DB /* XCLocalSwiftPackageReference "../../../watch/Engine" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../../tapscore-watch/Engine";
+			relativePath = "../../../watch/Engine";
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		92D02F9B3013D494007F69DB /* TapScoreEngine */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 92D02F983013D25D007F69DB /* XCLocalSwiftPackageReference "../../../tapscore-watch/Engine" */;
+			package = 92D02F983013D25D007F69DB /* XCLocalSwiftPackageReference "../../../watch/Engine" */;
 			productName = TapScoreEngine;
 		};
 /* End XCSwiftPackageProductDependency section */

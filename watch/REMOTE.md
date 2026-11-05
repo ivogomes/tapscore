@@ -12,13 +12,13 @@ protocol:      watch→phone {t:"score",side} · {t:"undo"} · {t:"sync"}
 ## The one rule: the watch app must be a "companion" of the iOS app
 Apple only lets a watch app talk to **its own host iPhone app**. A separate standalone watch project can't
 reach the TapScore iPhone app. So we add the watch app **inside** the existing Capacitor iOS project
-(`tools/tapscore-app/ios`) as an embedded **Watch App target**. That's the whole trick — do this and the
+(`app/ios`) as an embedded **Watch App target**. That's the whole trick — do this and the
 connection "just works" with no entitlements to toggle.
 
 Never used Xcode much? Follow every sub-step; the tricky spots have callouts. Budget ~30 min.
 
 ### 1. Add a Watch App target to the iOS project
-1. Open **`tools/tapscore-app/ios/App/App.xcworkspace`** in Xcode. ⚠️ Open the **`.xcworkspace`**, not the
+1. Open **`app/ios/App/App.xcworkspace`** in Xcode. ⚠️ Open the **`.xcworkspace`**, not the
    `.xcodeproj` — the workspace is what wires everything together.
 2. In the left sidebar (Project navigator), **click the blue `App` project icon at the very top** so it's
    selected. *(Skipping this is the #1 cause of the empty dropdown in step 4.)*
@@ -34,14 +34,14 @@ Never used Xcode much? Follow every sub-step; the tricky spots have callouts. Bu
 5. Xcode generated two starter files in the new watch folder — a `…App.swift` and a `ContentView.swift`.
    **Delete both** (Move to Trash). Ours (`TapScoreApp.swift`) is the real entry point; leaving the
    generated one causes a *"'main' attribute can only apply to one type"* error.
-6. **Add our watch code.** In Finder open `tools/tapscore-watch/WatchApp/`. Drag these **five** files onto
+6. **Add our watch code.** In Finder open `watch/WatchApp/`. Drag these **five** files onto
    the new **TapScore Watch** folder in Xcode: `TapScoreApp.swift`, `MatchModel.swift`, `Views.swift`,
    `RemoteModel.swift`, `RemoteView.swift`. In the dialog: tick **"Copy items if needed"** and — important —
    tick the **TapScore Watch** target under *Add to targets* (untick the iOS "App" target). *(Theme and
    Haptics already live inside `TapScoreApp.swift` — there's no separate Theme file for Apple Watch.)*
 7. **Attach the scoring engine** (this is two clicks that people miss — see the callout):
    - Menu **File ▸ Add Package Dependencies…** ▸ button **Add Local…** ▸ select the folder
-     `tools/tapscore-watch/Engine` (the one with `Package.swift`) ▸ **Add Package**.
+     `watch/Engine` (the one with `Package.swift`) ▸ **Add Package**.
    - When asked which target gets the `TapScoreEngine` library, tick the **TapScore Watch** target.
    - ⚠️ **Referenced ≠ linked.** Adding the package only *references* it. Now confirm it's *linked* to the
      watch target: select the **TapScore Watch** target ▸ **General** ▸ **Frameworks, Libraries, and
@@ -70,7 +70,7 @@ The iPhone app needs a small plugin so the web score screen can talk to the watc
 ### 3. Give the watch app an icon (optional but recommended)
 The watch target ships with an **empty** app icon, so it shows a blank gray circle in the watch's app grid
 (easy to think it "didn't install"). Fix it: in Xcode select the watch target's **Assets** ▸ **AppIcon**,
-and drag a **1024×1024 PNG** onto the single well. (`tools/tapscore-watch/AppIcon-1024.png` is ready to
+and drag a **1024×1024 PNG** onto the single well. (`watch/AppIcon-1024.png` is ready to
 use.)
 
 ### 4. Run and test
@@ -98,7 +98,7 @@ Wear watch  ⇄  (Wearable Data Layer)  ⇄  Android phone app  ⇄  the web sco
 ```
 
 New to this? First build the plain Wear app by following
-**[tools/tapscore-wear/README.md](../tapscore-wear/README.md)** — this page only adds the "talk to the
+**[wear/README.md](../wear/README.md)** — this page only adds the "talk to the
 phone" wiring on top of that.
 
 ## The one rule that makes pairing work: same identity
@@ -121,7 +121,7 @@ Nothing to code here; it's already wired in this repo:
 
 You just need a fresh build of the phone app installed on the phone:
 ```bash
-cd tools/tapscore-app
+cd app
 npm run apk      # builds a debug APK you can install on the phone
 ```
 (For a store build it's `npm run aab`.)

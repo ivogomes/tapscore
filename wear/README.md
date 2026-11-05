@@ -2,13 +2,13 @@
 
 Standalone-first Wear OS scorer: two tap zones (top = you, bottom = opponent), rotating bezel /
 Digital Crown = undo, long-press = menu. It reuses the shared scoring rules via a Kotlin port of the
-web engine. This is the Android counterpart to `tools/tapscore-watch/` (Apple Watch).
+web engine. This is the Android counterpart to `watch/` (Apple Watch).
 
 ```
-tools/tapscore-wear/
+wear/
 ├── engine/                     Pure Kotlin scoring engine (no Android deps)
-│   ├── ScoringEngine.kt        ← faithful port of ../tapscore/scoring.js
-│   └── ScoringEngineTest.kt    ← JUnit spec mirroring ../tapscore/scoring.test.cjs
+│   ├── ScoringEngine.kt        ← faithful port of ../scoring.js
+│   └── ScoringEngineTest.kt    ← JUnit spec mirroring ../scoring.test.cjs
 └── WearApp/                    Compose for Wear OS sources to add to a Wear OS app module
     ├── MainActivity.kt         entry point (routes standalone / remote)
     ├── MatchModel.kt           standalone match: engine, haptics, undo, last format
@@ -38,7 +38,7 @@ Budget ~30–45 min the first time (most of it is downloads).
 > = `com.ivogomes.tapscore`, signed with the phone's key). That one app both **works on its own on the
 > wrist** *and* can **control a match running on the phone**. A "standalone-only" build (its own
 > `…​.wear` id) runs on the wrist but can **never** talk to the phone — only pick that if you're just
-> poking at the UI. Full companion details: **[REMOTE.md](../tapscore-watch/REMOTE.md)**.
+> poking at the UI. Full companion details: **[REMOTE.md](../watch/REMOTE.md)**.
 
 ### 0. Install the tools (one time)
 1. Download and install **Android Studio** from <https://developer.android.com/studio> (free). Open it and
@@ -64,7 +64,7 @@ At the **top-left** of the Project panel there's a dropdown that usually says **
 `app → kotlin+java → com.ivogomes.tapscore`.
 
 You'll copy files from this repo folder into the project. On your Mac, open a Finder window at
-`tools/tapscore-wear/` so you can drag files across.
+`wear/` so you can drag files across.
 
 ### 3. Add the scoring engine (the rules)
 This is the shared code that turns taps into tennis/padel scores.
@@ -130,7 +130,7 @@ Open the **module** `build.gradle` — the one at **`app/build.gradle`** (also s
    **Home** screen: tap **Local match**, pick a sport, and tap **Start** to score. 🎉
 
 > The watch's **"Control phone"** button won't connect yet — that needs the phone app installed and paired.
-> Follow **[REMOTE.md](../tapscore-watch/REMOTE.md)** for the phone side.
+> Follow **[REMOTE.md](../watch/REMOTE.md)** for the phone side.
 
 ### If something goes wrong
 - **"duplicate class MainActivity" / two `@main`-like errors** → you didn't delete the template's starter
@@ -175,7 +175,7 @@ to the system font until Outfit is bundled:
 
 ## Remote mode (implemented)
 The **"Control phone"** mode mirrors and controls the phone's live match over the Wearable Data Layer —
-code is written; assemble/test on device per [REMOTE.md](../tapscore-watch/REMOTE.md).
+code is written; assemble/test on device per [REMOTE.md](../watch/REMOTE.md).
 
 ## Not yet wired (next steps)
 - On-watch advanced format (points target, advantage rules, tie-break points) — v1 uses sensible

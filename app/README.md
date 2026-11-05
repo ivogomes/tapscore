@@ -1,12 +1,12 @@
 # TapScore — native app (iOS + Android)
 
-Wraps the existing [TapScore PWA](../tapscore/) in a native shell using
+Wraps the existing [TapScore PWA](../) in a native shell using
 [Capacitor](https://capacitorjs.com). The web app runs essentially unchanged;
 this project just produces the Xcode and Android Studio projects you submit to
 the App Store and Google Play.
 
-**One source of truth:** the web app in `../tapscore/` is the product. This
-project *copies* it into `www/` at build time — you keep editing `../tapscore/`
+**One source of truth:** the web app in `../` is the product. This
+project *copies* it into `www/` at build time — you keep editing `../`
 as usual, and the site on ivogomes.com keeps working.
 
 ---
@@ -14,7 +14,7 @@ as usual, and the site on ivogomes.com keeps working.
 ## What was already done for you
 
 - Capacitor config, `package.json`, and a `copy-web.mjs` build script (this folder).
-- Feature-gated native code added to `../tapscore/index.html` — **no-ops on the
+- Feature-gated native code added to `../index.html` — **no-ops on the
   web**, and on device it uses native haptics, native keep-awake, native status
   bar, and hides the native splash. It also skips the service worker in the app.
 - Fullscreen on both platforms: **Android** draws edge-to-edge in immersive mode
@@ -35,7 +35,7 @@ The steps below need the network (npm registry) and, for iOS, a Mac with Xcode.
 
 | Path | What it is |
 |---|---|
-| `copy-web.mjs` | Copies `../tapscore/` into `www/` and strips the web-only bits |
+| `copy-web.mjs` | Copies `../` into `www/` and strips the web-only bits |
 | `capacitor.config.json` | Capacitor config (app id `com.ivogomes.tapscore`) |
 | `ios/`, `android/` | The native projects, including the hand-rolled `BillingPlugin` on each side |
 | `assets/` | Icon, splash and store graphics, plus the raw Play/App Store screenshots |
@@ -62,7 +62,7 @@ Also: Node 22+ (required by the Capacitor 8 CLI).
 
 ## First-time setup
 
-Run everything from this folder (`tools/tapscore-app/`):
+Run everything from this folder (`app/`):
 
 ```bash
 # 1. Install Capacitor + plugins (needs network)
@@ -82,7 +82,7 @@ npx cap sync
 ## Icons & splash screens
 
 Source assets already live in [`assets/`](assets/) — `logo.png` (1024px app icon,
-upscaled from `../tapscore/icon-512.png`) and `splash.png` / `splash-dark.png`
+upscaled from `../icon-512.png`) and `splash.png` / `splash-dark.png`
 (2732px, the logo centered on the `#0b1220` theme background). Generate every
 native size and sync them in:
 
@@ -136,7 +136,7 @@ npm run open:ios
 npm run open:android
 ```
 
-**After any change to `../tapscore/`, re-run `npm run sync`** (copies the web
+**After any change to `../`, re-run `npm run sync`** (copies the web
 app into both native projects).
 
 Other scripts: `npm run apk` builds a debug APK and installs it on a connected device
@@ -162,13 +162,13 @@ mkdir -p ~/keystores
   -alias tapscore -keyalg RSA -keysize 2048 -validity 10000
 
 # 2. Point the build at it:
-cd tools/tapscore-app/android
+cd app/android
 cp keystore.properties.example keystore.properties
 #   then edit keystore.properties: set storeFile to
 #   /Users/<you>/keystores/tapscore-release.jks and fill in the passwords.
 ```
 
-Then build signed artifacts from `tools/tapscore-app/`:
+Then build signed artifacts from `app/`:
 
 ```bash
 npm run sync
@@ -222,7 +222,7 @@ The warning-free options:
    ⚠️ Data safety is **not** "no data collected" — declare purchase history,
    processed for app functionality (the App Store / Google Play see it as the
    payment processor; no third party is involved). See the In-app purchases
-   section below and `../tapscore/privacy.html`.
+   section below and `../privacy.html`.
 3. Roll out to internal testing first, then production.
 
 ---
@@ -230,7 +230,7 @@ The warning-free options:
 ## In-app purchases (TapScore Pro)
 
 Purchases talk **directly** to each store — no third party. See the
-`TapScore Pro (free trial ...)` block in `../tapscore/index.html`
+`TapScore Pro (free trial ...)` block in `../index.html`
 (`configureBilling()`, `syncBilling()`, `Billing.purchase()/restore()`), which calls
 a hand-rolled native plugin (`Cap.Plugins.Billing`) exposing the same four methods on
 both platforms — `getProduct()`, `isOwned()`, `purchase()`, `restore()`:
@@ -273,11 +273,11 @@ returns anything in Sandbox.
 
 **5. Don't forget the disclosures.** Purchase history still leaves the device (to
 Apple/Google, as the payment processor), so the Play **Data safety** form must declare
-purchase history (see the Android submission step above) and `../tapscore/privacy.html`
+purchase history (see the Android submission step above) and `../privacy.html`
 must say so. Neither needs a third-party mention anymore.
 
 **Trial and gating.** In the native apps the first 3 completed games are free
-(`TRIAL_LIMIT` in `../tapscore/index.html`); after that, starting a match needs the
+(`TRIAL_LIMIT` in `../index.html`); after that, starting a match needs the
 `pro_unlock` purchase. Nothing is gated by sport or feature. The web version has no trial
 or paywall (`PRO_ENABLED` is only true inside the native shell).
 

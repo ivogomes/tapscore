@@ -1,7 +1,7 @@
 package com.ivogomes.tapscore.engine
 
 /**
- * TapScore scoring engine — a faithful Kotlin port of `tools/tapscore/scoring.js`.
+ * TapScore scoring engine — a faithful Kotlin port of `scoring.js`.
  *
  * Single source of truth for the rules (points → games → sets → match) across every sport:
  * tennis/padel (deuce, advantage, golden point, tie-break, match-tie-break decider) and the

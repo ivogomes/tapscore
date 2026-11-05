@@ -3,10 +3,10 @@ import Capacitor
 import StoreKit
 
 // StoreKit 2 wrapper for the single one-time "pro_unlock" product. Replaces RevenueCat
-// (tools/tapscore-app/README.md § "In-app purchases") — one SKU, no subscriptions, no
+// (app/README.md § "In-app purchases") — one SKU, no subscriptions, no
 // cross-platform account, so talking to StoreKit directly is simpler than a third party.
 //
-// JS contract (tools/tapscore/index.html): getProduct() -> {id, priceString|null}; isOwned()/restore()
+// JS contract (index.html): getProduct() -> {id, priceString|null}; isOwned()/restore()
 // -> {owned}; purchase() -> {owned}, or {owned:false, pending:true}, or rejects with code
 // "USER_CANCELLED" for a user-initiated cancel (any other rejection is a real failure).
 @objc(BillingPlugin)
